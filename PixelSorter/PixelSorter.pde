@@ -16,15 +16,15 @@ void setup() {
   //smarties.jpg from eismannhans
   //flower.jpg from Bessi
   img = loadImage("iceland.jpg");
-  size(500,500);
+  size(500, 500);
   frameRate(90);
 }
 
 void draw() {
-  for (int n = 0; n < step; n++){
+  for (int n = 0; n < step; n++) {
     for (int j = i; j < img.pixels.length; j ++) {
       if (eval(img.pixels[i]) < eval(img.pixels[j])) {
-         swap(i,j);
+        swap(i, j);
       }
     }
     if (i < img.pixels.length -1) {
@@ -37,34 +37,37 @@ void draw() {
   text(frameRate, 0, 16);
 }
 
-void swap(int x, int y){
+void swap(int x, int y) {
   color tmp = img.pixels[x];
   img.pixels[x] = img.pixels[y];
   img.pixels[y] = tmp;
 }
 
 float eval(color c) {
-  if(sort == 1) {
+  if (sort == 1) {
     float min = min(min(red(c), green(c)), blue(c));
     float max = max(max(red(c), green(c)), blue(c));
     if (min == max) return 0;
     float hue = 0f;
     if (max == red(c)) {
-        hue = (green(c)-blue(c))/(max-min);
+      hue = (green(c)-blue(c))/(max-min);
     } else if (max == green(c)) {
-        hue = 2f+(blue(c)-red(c))/(max-min);
+      hue = 2f+(blue(c)-red(c))/(max-min);
     } else {
-        hue = 4f+(red(c)-green(c))/(max-min);
+      hue = 4f+(red(c)-green(c))/(max-min);
     }
     hue = hue * 60;
     if (hue < 0) hue = hue + 360;
     return(hue);
-  }if(sort == 2) {
+  }
+  if (sort == 2) {
     return(hue(c));
-  }if(sort == 3) {
+  }
+  if (sort == 3) {
     return(0.2126*red(c)+0.7152*green(c)+0.0722*blue(c));
-  }if(sort == 4) {
-    return(sqrt(0.299*pow(red(c),2)+0.587*pow(green(c),2)+0.114*pow(blue(c),2)));
+  }
+  if (sort == 4) {
+    return(sqrt(0.299*pow(red(c), 2)+0.587*pow(green(c), 2)+0.114*pow(blue(c), 2)));
   }
   return(c);
 }
