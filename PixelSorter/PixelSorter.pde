@@ -1,7 +1,11 @@
-int step = 20; //choose how many pixels are sorted at once
 PImage img;
 int i;
 
+//choose how many pixels are sorted at once
+int step = 100;
+
+//fast / sliced mode
+boolean sliced = true;
 
 // 0 = idk (very fast)
 // 1 = fast hue
@@ -17,17 +21,17 @@ void setup() {
   //flower.jpg from Bessi
   img = loadImage("iceland.jpg");
   size(500, 500);
-  frameRate(90);
+  frameRate(120);
 }
 
 void draw() {
   for (int n = 0; n < step; n++) {
-    for (int j = i; j < img.pixels.length; j ++) {
-      if (eval(img.pixels[i]) < eval(img.pixels[j])) {
-        swap(i, j);
-      }
-    }
     if (i < img.pixels.length -1) {
+      for (int j = i; j < img.pixels.length && !sliced || j < i+(img.width-i%img.width); j ++) {
+        if (eval(img.pixels[i]) < eval(img.pixels[j])) {
+          swap(i, j);
+        }
+      }
       i++;
     }
   }
